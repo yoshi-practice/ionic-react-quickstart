@@ -17,6 +17,7 @@ const Home: React.FC = () => {
           </IonToolbar>
         </IonHeader>
         <ExploreContainer />
+        <a href="/new"><p>Links</p></a>
       </IonContent>
     </IonPage>
   );
