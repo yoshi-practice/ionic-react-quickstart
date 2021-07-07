@@ -1,23 +1,31 @@
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
-import ExploreContainer from '../components/ExploreContainer';
-import './Home.css';
+import { IonContent, IonHeader, IonPage, IonTitle,
+         IonToolbar, IonButton } from '@ionic/react';
+import React, { useState } from 'react';
+// import { Plugins, CameraResultType } from '@capacitor/core';
+import { Camera, CameraResultType } from '@capacitor/camera';
 
 const Home: React.FC = () => {
+  // const { Camera } = Plugins;
+  const [photo, setPhoto] = useState<any>();
+  const takePhoto = async () => {
+    const image = await Camera.getPhoto({
+      quality: 90,
+      allowEditing: true,
+      resultType: CameraResultType.Uri
+    });
+    setPhoto(image.webPath);
+  };
   return (
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonTitle>Blank</IonTitle>
+          <IonTitle>Ionic Blank</IonTitle>
         </IonToolbar>
       </IonHeader>
-      <IonContent fullscreen>
-        <IonHeader collapse="condense">
-          <IonToolbar>
-            <IonTitle size="large">Blank</IonTitle>
-          </IonToolbar>
-        </IonHeader>
-        <ExploreContainer />
-        <a href="/new"><p>Links</p></a>
+      <IonContent className="ion-padding">
+         {photo ? <img src={photo} alt="test camera" /> : <span>There is no picture yet.</span>}
+        <IonButton onClick={takePhoto}>Take Photo</IonButton>
+        <IonButton href="/new">new Page</IonButton>
       </IonContent>
     </IonPage>
   );
